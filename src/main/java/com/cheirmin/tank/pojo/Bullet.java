@@ -1,10 +1,7 @@
 package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.Dir;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.awt.*;
 
@@ -16,35 +13,26 @@ import java.awt.*;
  * @history: 1.2021-01-30 created by Cheirmin
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Tank {
-    //坐标
+public class Bullet {
+    private static final int SPEED = 10;
+    private static final int WIDE = 5, HIGH = 5;
     private int x, y;
-    private boolean moving = false;
     private Dir dir;
 
-    //长宽
-    private static final int WIDE = 50, HIGH = 50;
-    private static final int SPEED = 5;
-
-    public Tank(int x, int y) {
+    public Bullet(int x, int y, Dir dir) {
         this.x = x;
         this.y = y;
-        this.dir = Dir.DOWN;
+        this.dir = dir;
     }
 
     public void paint(Graphics g) {
         //绘制一个矩形
-        g.fillRect(x, y, WIDE, HIGH);
+        g.setColor(Color.RED);
+        g.fillOval(x+22, y+22, WIDE, HIGH);
         move();
     }
 
     private void move() {
-        if (!moving) {
-            return;
-        }
         switch (dir) {
             case LEFT:
                 x -= SPEED;

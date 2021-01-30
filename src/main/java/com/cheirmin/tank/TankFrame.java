@@ -1,5 +1,6 @@
 package com.cheirmin.tank;
 
+import com.cheirmin.tank.pojo.Bullet;
 import com.cheirmin.tank.pojo.Tank;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
     Tank tank = new Tank(200, 200);
+    Bullet bullet = new Bullet(tank.getX(),tank.getY(),tank.getDir());
 
     public TankFrame() {
         //大小
@@ -48,6 +50,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         tank.paint(g);
+        bullet.paint(g);
     }
 
     /**

@@ -9,8 +9,6 @@ package com.cheirmin.tank;
  */
 
 public enum Dir {
-    //没有方向
-    NO,
     //左
     LEFT,
     //上

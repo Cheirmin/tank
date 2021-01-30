@@ -15,7 +15,7 @@ import java.awt.*;
 @Data
 public class Bullet {
     private static final int SPEED = 10;
-    private static final int WIDE = 5, HIGH = 5;
+    private static final int WIDE = 10, HIGH = 10;
     private int x, y;
     private Dir dir;
 
@@ -28,7 +28,7 @@ public class Bullet {
     public void paint(Graphics g) {
         //绘制一个矩形
         g.setColor(Color.RED);
-        g.fillOval(x+22, y+22, WIDE, HIGH);
+        g.fillOval(x, y, WIDE, HIGH);
         move();
     }
 

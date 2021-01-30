@@ -19,11 +19,13 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
     Tank tank = new Tank(200, 200);
-    Bullet bullet = new Bullet(tank.getX(),tank.getY(),tank.getDir());
+    Bullet bullet = new Bullet(tank.getX()+20,tank.getY()+20,tank.getDir());
+    //画布大小
+    static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
 
     public TankFrame() {
         //大小
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         //固定大小
         setResizable(false);
         //标题
@@ -40,6 +42,22 @@ public class TankFrame extends Frame {
                 System.exit(0);
             }
         });
+    }
+
+    //内存画图解决闪烁问题
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g){
+        if (offScreenImage ==null){
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage,0,0,null);
     }
 
     /**
@@ -103,6 +121,7 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = false;
                     break;
+
                 default:
                     break;
             }

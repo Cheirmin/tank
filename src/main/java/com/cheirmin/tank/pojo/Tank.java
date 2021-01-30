@@ -37,6 +37,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         //绘制一个矩形
+        g.setColor(Color.ORANGE);
         g.fillRect(x, y, WIDE, HIGH);
         move();
     }

@@ -1,5 +1,7 @@
 package com.cheirmin.tank;
 
+import com.cheirmin.tank.pojo.Tank;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,11 +17,7 @@ import java.awt.event.WindowEvent;
  */
 
 public class TankFrame extends Frame {
-    int x = 200, y = 200;
-    //速度
-    final int SPEED = 10;
-    //方向
-    Dir dir = Dir.NO;
+    Tank tank = new Tank(200, 200);
 
     public TankFrame() {
         //大小
@@ -50,19 +48,19 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         //绘制一个矩形
-        g.fillRect(x, y, 50, 50);
-        switch (dir) {
+        g.fillRect(tank.getX(), tank.getY(), tank.getWide(), tank.getHigh());
+        switch (tank.getDir()) {
             case LEFT:
-                x -= SPEED;
+                tank.setX(tank.getX()-tank.getSPEED());
                 break;
             case RIGHT:
-                x += SPEED;
+                tank.setX(tank.getX()+tank.getSPEED());
                 break;
             case UP:
-                y -= SPEED;
+                tank.setY(tank.getY()-tank.getSPEED());
                 break;
             case DOWN:
-                y += SPEED;
+                tank.setY(tank.getY()+tank.getSPEED());
                 break;
             default:
                 break;
@@ -128,20 +126,20 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if (bL) {
-                dir = Dir.LEFT;
+                tank.setDir(Dir.LEFT);
             }
             if (bR) {
-                dir = Dir.RIGHT;
+                tank.setDir(Dir.RIGHT);
             }
             if (bU) {
-                dir = Dir.UP;
+                tank.setDir(Dir.UP);
             }
             if (bD) {
-                dir = Dir.DOWN;
+                tank.setDir(Dir.DOWN);
             }
 
             if (!bL && !bR && !bU && !bD) {
-                dir = Dir.NO;
+                tank.setDir(Dir.NO);
             }
         }
     }

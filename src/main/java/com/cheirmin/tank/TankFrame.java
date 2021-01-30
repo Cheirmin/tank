@@ -47,25 +47,7 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        //绘制一个矩形
-        g.fillRect(tank.getX(), tank.getY(), tank.getWide(), tank.getHigh());
-        switch (tank.getDir()) {
-            case LEFT:
-                tank.setX(tank.getX()-tank.getSPEED());
-                break;
-            case RIGHT:
-                tank.setX(tank.getX()+tank.getSPEED());
-                break;
-            case UP:
-                tank.setY(tank.getY()-tank.getSPEED());
-                break;
-            case DOWN:
-                tank.setY(tank.getY()+tank.getSPEED());
-                break;
-            default:
-                break;
-        }
-
+        tank.paint(g);
     }
 
     /**

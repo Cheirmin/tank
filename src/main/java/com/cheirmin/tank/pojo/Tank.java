@@ -1,6 +1,7 @@
 package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.Dir;
+import com.cheirmin.tank.TankFrame;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,10 +30,13 @@ public class Tank {
     private static final int WIDE = 50, HIGH = 50;
     private static final int SPEED = 5;
 
-    public Tank(int x, int y) {
+    private TankFrame tf = null;
+
+    public Tank(int x, int y,Dir dir,TankFrame tf) {
         this.x = x;
         this.y = y;
-        this.dir = Dir.DOWN;
+        this.dir = dir;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {
@@ -62,5 +66,9 @@ public class Tank {
             default:
                 break;
         }
+    }
+
+    public void fire() {
+        tf.setBullet(new Bullet(this.x,this.y,this.dir));
     }
 }

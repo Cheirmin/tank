@@ -18,10 +18,11 @@ import java.awt.event.WindowEvent;
  */
 
 public class TankFrame extends Frame {
-    Tank tank = new Tank(200, 200);
-    Bullet bullet = new Bullet(tank.getX()+20,tank.getY()+20,tank.getDir());
+    Tank tank = new Tank(200, 200,Dir.DOWN,this);
+    Bullet bullet = new Bullet(200, 200,Dir.DOWN);
+
     //画布大小
-    static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
+    private static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
 
     public TankFrame() {
         //大小
@@ -121,7 +122,9 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = false;
                     break;
-
+                case KeyEvent.VK_Q:
+                    tank.fire();
+                    break;
                 default:
                     break;
             }
@@ -149,5 +152,14 @@ public class TankFrame extends Frame {
                 tank.setDir(Dir.DOWN);
             }
         }
+    }
+
+
+    public Bullet getBullet() {
+        return bullet;
+    }
+
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
     }
 }

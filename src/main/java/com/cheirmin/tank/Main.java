@@ -12,7 +12,6 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
        TankFrame frame = new TankFrame();
-
        while (true){
            //每隔50ms重绘画布
            Thread.sleep(50);

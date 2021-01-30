@@ -8,6 +8,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Copyright: Shanghai Definesys Company.All rights reserved.
@@ -18,11 +20,11 @@ import java.awt.event.WindowEvent;
  */
 
 public class TankFrame extends Frame {
-    Tank tank = new Tank(200, 200,Dir.DOWN,this);
-    Bullet bullet = new Bullet(200, 200,Dir.DOWN);
+    public Tank tank = new Tank(200, 200,Dir.DOWN,this);
+    public List<Bullet> bulletList = new ArrayList<>();
 
     //画布大小
-    private static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
 
     public TankFrame() {
         //大小
@@ -69,7 +71,9 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         tank.paint(g);
-        bullet.paint(g);
+        for (int i = 0; i < bulletList.size(); i++) {
+            bulletList.get(i).paint(g);
+        }
     }
 
     /**
@@ -154,12 +158,11 @@ public class TankFrame extends Frame {
         }
     }
 
-
-    public Bullet getBullet() {
-        return bullet;
+    public List<Bullet> getBulletList() {
+        return bulletList;
     }
 
-    public void setBullet(Bullet bullet) {
-        this.bullet = bullet;
+    public void setBulletList(List<Bullet> bulletList) {
+        this.bulletList = bulletList;
     }
 }

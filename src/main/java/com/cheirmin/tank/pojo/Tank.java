@@ -40,6 +40,8 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawString("子弹数量"+tf.bulletList.size(),10,60);
         //绘制一个矩形
         g.setColor(Color.ORANGE);
         g.fillRect(x, y, WIDE, HIGH);
@@ -69,6 +71,6 @@ public class Tank {
     }
 
     public void fire() {
-        tf.setBullet(new Bullet(this.x,this.y,this.dir));
+        tf.bulletList.add(new Bullet(this.x,this.y,this.dir,tf));
     }
 }

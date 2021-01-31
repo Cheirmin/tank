@@ -30,7 +30,7 @@ public class Tank {
     //坐标
     private int x, y;
     //是否移动
-    private boolean moving = true;
+    private boolean moving = false;
     //方向
     private Dir dir;
     //阵营
@@ -76,6 +76,9 @@ public class Tank {
             default:
                 break;
         }
+        if (group == Group.BAD && random.nextInt(10) > 8) {
+            this.fire();
+        }
 
         move();
     }
@@ -100,10 +103,6 @@ public class Tank {
             default:
                 break;
         }
-        if (random.nextInt(10) > 8) {
-            this.fire();
-        }
-
         //改变方向
 //        randomDir();
     }

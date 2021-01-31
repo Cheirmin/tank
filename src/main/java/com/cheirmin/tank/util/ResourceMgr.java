@@ -18,6 +18,8 @@ public class ResourceMgr {
     public static BufferedImage tankL, tankR, tankU, tankD;
     //子弹
     public static BufferedImage bulletL, bulletR, bulletU, bulletD;
+    //爆炸效果
+    public static BufferedImage[] explodes = new BufferedImage[16];
 
     static {
         try {
@@ -38,6 +40,11 @@ public class ResourceMgr {
                     .getResourceAsStream("static/images/bulletU.gif")));
             bulletD = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
                     .getResourceAsStream("static/images/bulletD.gif")));
+
+            for (int i = 0; i < 16; i++) {
+                explodes[i] = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
+                        .getResourceAsStream("static/images/e" + (i + 1) + ".gif")));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

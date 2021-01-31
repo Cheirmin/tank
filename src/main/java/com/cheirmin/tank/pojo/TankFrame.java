@@ -24,6 +24,7 @@ public class TankFrame extends Frame {
     public Tank myTank = new Tank(370, 500, Dir.UP, Group.GOOD, this);
     public List<Bullet> bulletList = new ArrayList<>();
     public List<Tank> tanks = new ArrayList<>();
+    Explode explode = new Explode(100,100,this);
 
     //画布大小
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -72,18 +73,18 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        //敌方坦克
-        for (Iterator<Tank> it = tanks.iterator(); it.hasNext(); ) {
-            Tank b = it.next();
+        explode.paint(g);
+        //画子弹
+        for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
+            Bullet b = it.next();
             if (!b.live) {
                 it.remove();
             }
             b.paint(g);
         }
-
-        //画子弹
-        for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
-            Bullet b = it.next();
+        //画敌方坦克
+        for (Iterator<Tank> it = tanks.iterator(); it.hasNext(); ) {
+            Tank b = it.next();
             if (!b.live) {
                 it.remove();
             }

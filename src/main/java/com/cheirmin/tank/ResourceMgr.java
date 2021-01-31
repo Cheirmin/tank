@@ -15,9 +15,9 @@ import java.util.Objects;
 
 public class ResourceMgr {
     //坦克上下左右
-    public static BufferedImage tankL,tankR,tankU,tankD;
+    public static BufferedImage tankL, tankR, tankU, tankD;
     //子弹
-    public static BufferedImage bulletL,bulletR,bulletU,bulletD;
+    public static BufferedImage bulletL, bulletR, bulletU, bulletD;
 
     static {
         try {

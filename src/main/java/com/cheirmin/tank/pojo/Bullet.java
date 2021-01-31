@@ -17,13 +17,20 @@ import java.awt.*;
 @Data
 public class Bullet {
     private static final int SPEED = 20;
+
+    public static int DWIDE = ResourceMgr.bulletD.getWidth();
+    public static int DHIGH = ResourceMgr.bulletD.getHeight();
+
+    public static int LWIDE = ResourceMgr.bulletL.getWidth();
+    public static int LHIGH = ResourceMgr.bulletL.getHeight();
+
     private int x, y;
     private Dir dir;
     public boolean live = true;
 
     private TankFrame tf;
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -31,22 +38,22 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if (!live){
+        if (!live) {
             tf.bulletList.remove(this);
         }
         //绘制一个矩形
-        switch (dir){
+        switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x, y, null);
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x, y, null);
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU,x, y, null);
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x, y, null);
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
                 break;
             default:
                 break;
@@ -72,7 +79,7 @@ public class Bullet {
                 break;
         }
 
-        if (x<0||y<0||x> TankFrame.GAME_WIDTH ||y>TankFrame.GAME_HEIGHT) {
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
     }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.awt.*;
 
 /**
- * @Copyright: Shanghai Definesys Company.All rights reserved.
+ * @Copyright:
  * @Description:
  * @author: Cheirmin
  * @since: 2021-01-30
@@ -24,15 +24,22 @@ import java.awt.*;
 public class Tank {
     //坐标
     private int x, y;
+    //是否移动
     private boolean moving = false;
+    //方向
     private Dir dir;
-
     //长宽
-    private static final int SPEED = 5;
+    public static int DWIDE = ResourceMgr.tankD.getWidth();
+    public static int DHIGH = ResourceMgr.tankD.getHeight();
+    public static int LWIDE = ResourceMgr.tankL.getWidth();
+    public static int LHIGH = ResourceMgr.tankL.getHeight();
 
+    //速度
+    private static final int SPEED = 5;
+    //画布引用
     private TankFrame tf = null;
 
-    public Tank(int x, int y,Dir dir,TankFrame tf) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -41,20 +48,20 @@ public class Tank {
 
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
-        g.drawString("子弹数量"+tf.bulletList.size(),10,60);
+        g.drawString("子弹数量" + tf.bulletList.size(), 10, 60);
         //绘制一个矩形
-        switch (dir){
+        switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL,x, y, null);
+                g.drawImage(ResourceMgr.tankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR,x, y, null);
+                g.drawImage(ResourceMgr.tankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU,x, y, null);
+                g.drawImage(ResourceMgr.tankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD,x, y, null);
+                g.drawImage(ResourceMgr.tankD, x, y, null);
                 break;
             default:
                 break;
@@ -86,6 +93,23 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bulletList.add(new Bullet(this.x+18,this.y+22,this.dir,tf));
+        int bX = this.x;
+        int bY = this.y;
+        switch (dir) {
+            case LEFT:
+            case RIGHT:
+                bX += (Tank.LWIDE - Bullet.LWIDE) / 2;
+                bY += (Tank.LHIGH - Bullet.LHIGH) / 2;
+                break;
+            case UP:
+            case DOWN:
+                bX += (Tank.DWIDE - Bullet.DWIDE) / 2;
+                bY += (Tank.DHIGH - Bullet.DHIGH) / 2;
+                break;
+            default:
+                break;
+        }
+
+        tf.bulletList.add(new Bullet(bX, bY, this.dir, this.tf));
     }
 }

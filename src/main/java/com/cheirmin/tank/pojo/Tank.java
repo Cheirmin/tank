@@ -113,6 +113,22 @@ public class Tank {
             //改变方向
             randomDir();
         }
+        //边界检测
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if (x<2){
+            x = 2;
+        }else if (x>TankFrame.GAME_WIDTH-Tank.DWIDE-2){
+            x= TankFrame.GAME_WIDTH-Tank.DWIDE-2;
+        }
+
+        if (y<32){
+            y =32;
+        }else if (y>TankFrame.GAME_HEIGHT-Tank.DHIGH-2){
+            y =TankFrame.GAME_HEIGHT-Tank.DHIGH-2;
+        }
     }
 
     private void randomDir() {

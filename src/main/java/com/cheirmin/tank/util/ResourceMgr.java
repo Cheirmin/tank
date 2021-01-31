@@ -1,4 +1,4 @@
-package com.cheirmin.tank;
+package com.cheirmin.tank.util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

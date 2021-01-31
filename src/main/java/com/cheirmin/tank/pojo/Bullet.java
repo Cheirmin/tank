@@ -1,14 +1,14 @@
 package com.cheirmin.tank.pojo;
 
-import com.cheirmin.tank.Dir;
-import com.cheirmin.tank.ResourceMgr;
-import com.cheirmin.tank.TankFrame;
+import com.cheirmin.tank.ennum.Dir;
+import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.util.ResourceMgr;
 import lombok.Data;
 
 import java.awt.*;
 
 /**
- * @Copyright: Shanghai Definesys Company.All rights reserved.
+ * @Copyright:
  * @Description:
  * @author: Cheirmin
  * @since: 2021-01-30
@@ -16,24 +16,29 @@ import java.awt.*;
  */
 @Data
 public class Bullet {
-    private static final int SPEED = 20;
-
+    //速度
+    private static final int SPEED = 25;
+    //阵营
+    private Group group;
+    //长宽
     public static int DWIDE = ResourceMgr.bulletD.getWidth();
     public static int DHIGH = ResourceMgr.bulletD.getHeight();
-
     public static int LWIDE = ResourceMgr.bulletL.getWidth();
     public static int LHIGH = ResourceMgr.bulletL.getHeight();
-
+    //坐标
     private int x, y;
+    //方向
     private Dir dir;
+    //存活
     public boolean live = true;
-
+    //画布引用
     private TankFrame tf;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -84,17 +89,26 @@ public class Bullet {
         }
     }
 
+    /**
+     * 碰撞处理
+     * @param tank 坦克
+     */
     public void collideWith(Tank tank) {
-        Rectangle rect1 = null;
-        Rectangle rect2 = null;
+        //如果是己方坦克的子弹，不会死亡
+        if (this.group == tank.getGroup()) {
+            return;
+        }
+
+        Rectangle rect1;
+        Rectangle rect2;
         switch (dir) {
             case LEFT:
             case RIGHT:
-                rect1 = new Rectangle(this.x,this.y,LWIDE,LHIGH);
+                rect1 = new Rectangle(this.x, this.y, LWIDE, LHIGH);
                 break;
             case UP:
             case DOWN:
-                rect1 = new Rectangle(this.x,this.y,DWIDE,DHIGH);
+                rect1 = new Rectangle(this.x, this.y, DWIDE, DHIGH);
                 break;
             default:
                 rect1 = new Rectangle();
@@ -104,18 +118,18 @@ public class Bullet {
         switch (tank.getDir()) {
             case LEFT:
             case RIGHT:
-                rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.LWIDE,Tank.LHIGH);
+                rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.LWIDE, Tank.LHIGH);
                 break;
             case UP:
             case DOWN:
-                rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.DWIDE,Tank.DHIGH);
+                rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.DWIDE, Tank.DHIGH);
                 break;
             default:
                 rect2 = new Rectangle();
                 break;
         }
 
-        if (rect2.intersects(rect1)){
+        if (rect2.intersects(rect1)) {
             tank.die();
             this.die();
         }

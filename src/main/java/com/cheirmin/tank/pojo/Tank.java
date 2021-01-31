@@ -1,14 +1,15 @@
 package com.cheirmin.tank.pojo;
 
-import com.cheirmin.tank.Dir;
-import com.cheirmin.tank.ResourceMgr;
-import com.cheirmin.tank.TankFrame;
+import com.cheirmin.tank.ennum.Dir;
+import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.util.ResourceMgr;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @Copyright:
@@ -22,28 +23,35 @@ import java.awt.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tank {
+    //存活
     public boolean live = true;
+    //速度
+    private static final int SPEED = 5;
     //坐标
     private int x, y;
     //是否移动
-    private boolean moving = false;
+    private boolean moving = true;
     //方向
     private Dir dir;
+    //阵营
+    private Group group = Group.BAD;
+
     //长宽
     public static int DWIDE = ResourceMgr.tankD.getWidth();
     public static int DHIGH = ResourceMgr.tankD.getHeight();
     public static int LWIDE = ResourceMgr.tankL.getWidth();
     public static int LHIGH = ResourceMgr.tankL.getHeight();
 
-    //速度
-    private static final int SPEED = 5;
+    //随机数
+    private Random random = new Random();
     //画布引用
     private TankFrame tf = null;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -92,10 +100,16 @@ public class Tank {
             default:
                 break;
         }
+        if (random.nextInt(10) > 8) {
+            this.fire();
+        }
+
+        //改变方向
+//        randomDir();
     }
 
     public void fire() {
-        if (!live){
+        if (!live) {
             return;
         }
         int bX = this.x;
@@ -115,7 +129,7 @@ public class Tank {
                 break;
         }
 
-        tf.bulletList.add(new Bullet(bX, bY, this.dir, this.tf));
+        tf.bulletList.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
     }
 
     public void die() {

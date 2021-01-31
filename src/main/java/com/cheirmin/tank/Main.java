@@ -1,6 +1,9 @@
 package com.cheirmin.tank;
 
+import com.cheirmin.tank.ennum.Dir;
+import com.cheirmin.tank.ennum.Group;
 import com.cheirmin.tank.pojo.Tank;
+import com.cheirmin.tank.pojo.TankFrame;
 
 /**
  * @Copyright:
@@ -17,7 +20,7 @@ public class Main {
 
         //初始化地方坦克
         for (int i = 0; i < 5; i++) {
-            tf.tanks.add(new Tank(i*186,50,Dir.DOWN,tf));
+            tf.tanks.add(new Tank(i * 186, 50, Dir.DOWN, Group.BAD, tf));
         }
 
         while (true) {

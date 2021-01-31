@@ -1,7 +1,7 @@
-package com.cheirmin.tank;
+package com.cheirmin.tank.pojo;
 
-import com.cheirmin.tank.pojo.Bullet;
-import com.cheirmin.tank.pojo.Tank;
+import com.cheirmin.tank.ennum.Dir;
+import com.cheirmin.tank.ennum.Group;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class TankFrame extends Frame {
-    public Tank myTank = new Tank(370, 500, Dir.UP, this);
+    public Tank myTank = new Tank(370, 500, Dir.UP, Group.GOOD, this);
     public List<Bullet> bulletList = new ArrayList<>();
     public List<Tank> tanks = new ArrayList<>();
 
@@ -51,7 +51,6 @@ public class TankFrame extends Frame {
 
     //内存画图解决闪烁问题
     Image offScreenImage = null;
-
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -91,9 +90,9 @@ public class TankFrame extends Frame {
             b.paint(g);
         }
 
-        for (int i = 0; i < bulletList.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bulletList.get(i).collideWith(tanks.get(j));
+        for (Bullet bullet : bulletList) {
+            for (Tank tank : tanks) {
+                bullet.collideWith(tank);
             }
         }
 

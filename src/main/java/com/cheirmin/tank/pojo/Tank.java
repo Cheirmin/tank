@@ -27,11 +27,11 @@ public class Tank {
     //存活
     public boolean live = true;
     //速度
-    private static final int SPEED = 8;
+    private static final int SPEED = 5;
     //坐标
     private int x, y;
     //是否移动
-    private boolean moving = false;
+    private boolean moving;
     //方向
     private Dir dir;
     //阵营
@@ -48,9 +48,10 @@ public class Tank {
     //画布引用
     private TankFrame tf = null;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Tank(int x, int y, boolean moving,Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
+        this.moving = moving;
         this.dir = dir;
         this.group = group;
         this.tf = tf;
@@ -58,8 +59,9 @@ public class Tank {
 
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
-        g.drawString("子弹数 " + tf.bulletList.size(), 10, 45);
+        g.drawString("子弹数 " + tf.bullets.size(), 10, 45);
         g.drawString("敌人数 " + tf.tanks.size(), 100, 45);
+        g.drawString("爆炸数量 " + tf.explodes.size(), 190, 45);
 
         BufferedImage[] tank = (group == Group.BAD)
                 ? ResourceMgr.badTank
@@ -81,10 +83,6 @@ public class Tank {
             default:
                 break;
         }
-        if (group == Group.BAD && random.nextInt(10) > 8) {
-            this.fire();
-        }
-
         move();
     }
 
@@ -108,8 +106,17 @@ public class Tank {
             default:
                 break;
         }
-        //改变方向
-//        randomDir();
+        if (group == Group.BAD && random.nextInt(10) > 8) {
+            this.fire();
+        }
+        if (group == Group.BAD && random.nextInt(100) > 95) {
+            //改变方向
+            randomDir();
+        }
+    }
+
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void fire() {
@@ -133,7 +140,7 @@ public class Tank {
                 break;
         }
 
-        tf.bulletList.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
     }
 
     public void die() {

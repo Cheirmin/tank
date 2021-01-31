@@ -44,7 +44,7 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if (!live) {
-            tf.bulletList.remove(this);
+            tf.bullets.remove(this);
         }
         //绘制一个矩形
         switch (dir) {
@@ -131,10 +131,9 @@ public class Bullet {
         }
 
         if (rect2.intersects(rect1)) {
-            tf.explodes.add(new Explode(this.x, this.y, tf));
-
             tank.die();
             this.die();
+            tf.explodes.add(new Explode(this.x, this.y, tf));
         }
     }
 

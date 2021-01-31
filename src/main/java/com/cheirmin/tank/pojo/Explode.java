@@ -21,8 +21,6 @@ public class Explode {
 
     //坐标
     private int x, y;
-    //存活
-    public boolean live = true;
     //画布引用
     private TankFrame tf;
     //爆炸步骤
@@ -41,7 +39,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            live = false;
+           tf.explodes.remove(this);
         }
     }
 }

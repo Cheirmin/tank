@@ -20,7 +20,7 @@ public class Main {
 
         //初始化地方坦克
         for (int i = 0; i < 5; i++) {
-            tf.tanks.add(new Tank(i * 186, 50, Dir.DOWN, Group.BAD, tf));
+            tf.tanks.add(new Tank(i * 186, 50,true, Dir.DOWN, Group.BAD, tf));
         }
 
         while (true) {

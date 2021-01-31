@@ -21,8 +21,8 @@ import java.util.List;
  */
 
 public class TankFrame extends Frame {
-    public Tank myTank = new Tank(370, 500, Dir.UP, Group.GOOD, this);
-    public List<Bullet> bulletList = new ArrayList<>();
+    public Tank myTank = new Tank(370, 500,false, Dir.UP, Group.GOOD, this);
+    public List<Bullet> bullets = new ArrayList<>();
     public List<Tank> tanks = new ArrayList<>();
     public List<Explode> explodes = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         //画子弹
-        for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
+        for (Iterator<Bullet> it = bullets.iterator(); it.hasNext(); ) {
             Bullet b = it.next();
             if (!b.live) {
                 it.remove();
@@ -83,13 +83,8 @@ public class TankFrame extends Frame {
             b.paint(g);
         }
         //画爆炸
-        for (Iterator<Explode> it = explodes.iterator(); it.hasNext(); ) {
-            Explode e = it.next();
-            if (!e.live) {
-                it.remove();
-            }else {
-                e.paint(g);
-            }
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
         }
         //画敌方坦克
         for (Iterator<Tank> it = tanks.iterator(); it.hasNext(); ) {
@@ -100,7 +95,7 @@ public class TankFrame extends Frame {
             i.paint(g);
         }
 
-        for (Bullet bullet : bulletList) {
+        for (Bullet bullet : bullets) {
             for (Tank tank : tanks) {
                 bullet.collideWith(tank);
             }
@@ -189,13 +184,5 @@ public class TankFrame extends Frame {
                 myTank.setDir(Dir.DOWN);
             }
         }
-    }
-
-    public List<Bullet> getBulletList() {
-        return bulletList;
-    }
-
-    public void setBulletList(List<Bullet> bulletList) {
-        this.bulletList = bulletList;
     }
 }

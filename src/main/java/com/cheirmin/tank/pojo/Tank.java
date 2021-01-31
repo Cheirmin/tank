@@ -1,6 +1,7 @@
 package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.Dir;
+import com.cheirmin.tank.ResourceMgr;
 import com.cheirmin.tank.TankFrame;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,6 @@ public class Tank {
     private Dir dir;
 
     //长宽
-    private static final int WIDE = 50, HIGH = 50;
     private static final int SPEED = 5;
 
     private TankFrame tf = null;
@@ -43,8 +43,23 @@ public class Tank {
         g.setColor(Color.WHITE);
         g.drawString("子弹数量"+tf.bulletList.size(),10,60);
         //绘制一个矩形
-        g.setColor(Color.ORANGE);
-        g.fillRect(x, y, WIDE, HIGH);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL,x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x, y, null);
+                break;
+            default:
+                break;
+        }
+
         move();
     }
 
@@ -71,6 +86,6 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bulletList.add(new Bullet(this.x,this.y,this.dir,tf));
+        tf.bulletList.add(new Bullet(this.x+18,this.y+22,this.dir,tf));
     }
 }

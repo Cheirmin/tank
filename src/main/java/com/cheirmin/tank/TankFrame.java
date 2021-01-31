@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,11 +21,11 @@ import java.util.List;
  */
 
 public class TankFrame extends Frame {
-    public Tank tank = new Tank(200, 200,Dir.DOWN,this);
+    public Tank tank = new Tank(200, 200, Dir.DOWN, this);
     public List<Bullet> bulletList = new ArrayList<>();
 
     //画布大小
-    public static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() {
         //大小
@@ -49,18 +50,19 @@ public class TankFrame extends Frame {
 
     //内存画图解决闪烁问题
     Image offScreenImage = null;
+
     @Override
-    public void update(Graphics g){
-        if (offScreenImage ==null){
-            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
         gOffScreen.setColor(Color.BLACK);
-        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
-        g.drawImage(offScreenImage,0,0,null);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     /**
@@ -70,10 +72,17 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        tank.paint(g);
-        for (int i = 0; i < bulletList.size(); i++) {
-            bulletList.get(i).paint(g);
+//        for (int i = 0; i < bulletList.size(); i++) {
+//            bulletList.get(i).paint(g);
+//        }
+        for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
+            Bullet b = it.next();
+            if (!b.live) {
+                it.remove();
+            }
+            b.paint(g);
         }
+        tank.paint(g);
     }
 
     /**
@@ -143,7 +152,6 @@ public class TankFrame extends Frame {
 
             tank.setMoving(true);
             if (bL) {
-
                 tank.setDir(Dir.LEFT);
             }
             if (bR) {

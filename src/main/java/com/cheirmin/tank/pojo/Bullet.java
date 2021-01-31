@@ -1,6 +1,7 @@
 package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.Dir;
+import com.cheirmin.tank.ResourceMgr;
 import com.cheirmin.tank.TankFrame;
 import lombok.Data;
 
@@ -16,10 +17,9 @@ import java.awt.*;
 @Data
 public class Bullet {
     private static final int SPEED = 20;
-    private static final int WIDE = 10, HIGH = 10;
     private int x, y;
     private Dir dir;
-    private boolean live = true;
+    public boolean live = true;
 
     private TankFrame tf;
 
@@ -35,8 +35,22 @@ public class Bullet {
             tf.bulletList.remove(this);
         }
         //绘制一个矩形
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDE, HIGH);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL,x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR,x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU,x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD,x, y, null);
+                break;
+            default:
+                break;
+        }
         move();
     }
 

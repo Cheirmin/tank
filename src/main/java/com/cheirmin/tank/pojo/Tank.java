@@ -48,13 +48,26 @@ public class Tank {
     //画布引用
     private TankFrame tf = null;
 
-    public Tank(int x, int y, boolean moving,Dir dir, Group group, TankFrame tf) {
+    //判断重复--碰撞检测
+    Rectangle rect = new Rectangle();
+
+    public Tank(int x, int y, boolean moving, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.moving = moving;
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rect.x = x;
+        rect.y = y;
+        if (dir == Dir.LEFT || dir == Dir.RIGHT) {
+            rect.width = LWIDE;
+            rect.height = LHIGH;
+        } else {
+            rect.width = DWIDE;
+            rect.height = DHIGH;
+        }
     }
 
     public void paint(Graphics g) {
@@ -113,21 +126,26 @@ public class Tank {
             //改变方向
             randomDir();
         }
+
+        //更新碰撞检测
+        rect.x = x;
+        rect.y = y;
+
         //边界检测
         boundsCheck();
     }
 
     private void boundsCheck() {
-        if (x<2){
+        if (x < 2) {
             x = 2;
-        }else if (x>TankFrame.GAME_WIDTH-Tank.DWIDE-2){
-            x= TankFrame.GAME_WIDTH-Tank.DWIDE-2;
+        } else if (x > TankFrame.GAME_WIDTH - Tank.DWIDE - 2) {
+            x = TankFrame.GAME_WIDTH - Tank.DWIDE - 2;
         }
 
-        if (y<32){
-            y =32;
-        }else if (y>TankFrame.GAME_HEIGHT-Tank.DHIGH-2){
-            y =TankFrame.GAME_HEIGHT-Tank.DHIGH-2;
+        if (y < 32) {
+            y = 32;
+        } else if (y > TankFrame.GAME_HEIGHT - Tank.DHIGH - 2) {
+            y = TankFrame.GAME_HEIGHT - Tank.DHIGH - 2;
         }
     }
 

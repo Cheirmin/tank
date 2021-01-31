@@ -33,6 +33,8 @@ public class Bullet {
     public boolean live = true;
     //画布引用
     private TankFrame tf;
+    //判断重复--碰撞检测
+    Rectangle rect = new Rectangle();
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -40,6 +42,16 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rect.x = x;
+        rect.y = y;
+        if (dir == Dir.LEFT || dir == Dir.RIGHT) {
+            rect.width = LWIDE;
+            rect.height = LHIGH;
+        } else {
+            rect.width = DWIDE;
+            rect.height = DHIGH;
+        }
     }
 
     public void paint(Graphics g) {
@@ -84,13 +96,18 @@ public class Bullet {
                 break;
         }
 
+        //更新碰撞检测
+        rect.x = x;
+        rect.y = y;
+
+        //判断是否存活
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
     }
 
     /**
-     * 碰撞处理
+     * 碰撞检测
      *
      * @param tank 坦克
      */
@@ -100,41 +117,14 @@ public class Bullet {
             return;
         }
 
-        Rectangle rect1;
-        Rectangle rect2;
-        switch (dir) {
-            case LEFT:
-            case RIGHT:
-                rect1 = new Rectangle(this.x, this.y, LWIDE, LHIGH);
-                break;
-            case UP:
-            case DOWN:
-                rect1 = new Rectangle(this.x, this.y, DWIDE, DHIGH);
-                break;
-            default:
-                rect1 = new Rectangle();
-                break;
-        }
-
-        switch (tank.getDir()) {
-            case LEFT:
-            case RIGHT:
-                rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.LWIDE, Tank.LHIGH);
-                break;
-            case UP:
-            case DOWN:
-                rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.DWIDE, Tank.DHIGH);
-                break;
-            default:
-                rect2 = new Rectangle();
-                break;
-        }
+        Rectangle rect1 = this.rect;
+        Rectangle rect2 = tank.rect;
 
         if (rect2.intersects(rect1)) {
             tank.die();
             this.die();
-            int eX =tank.getX()+(Tank.DWIDE-Explode.WIDE)/2;
-            int eY =tank.getY()+(Tank.DHIGH-Explode.HIGH)/2;
+            int eX = tank.getX() + (Tank.DWIDE - Explode.WIDE) / 2;
+            int eY = tank.getY() + (Tank.DHIGH - Explode.HIGH) / 2;
             tf.explodes.add(new Explode(eX, eY, tf));
         }
     }

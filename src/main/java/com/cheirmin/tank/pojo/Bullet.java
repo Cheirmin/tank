@@ -130,6 +130,8 @@ public class Bullet {
         }
 
         if (rect2.intersects(rect1)) {
+            tf.explodes.add(new Explode(this.x,this.y,tf));
+
             tank.die();
             this.die();
         }

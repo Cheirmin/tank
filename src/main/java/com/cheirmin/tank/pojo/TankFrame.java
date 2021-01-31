@@ -24,7 +24,7 @@ public class TankFrame extends Frame {
     public Tank myTank = new Tank(370, 500, Dir.UP, Group.GOOD, this);
     public List<Bullet> bulletList = new ArrayList<>();
     public List<Tank> tanks = new ArrayList<>();
-    Explode explode = new Explode(100,100,this);
+    public List<Explode> explodes = new ArrayList<>();
 
     //画布大小
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -52,6 +52,7 @@ public class TankFrame extends Frame {
 
     //内存画图解决闪烁问题
     Image offScreenImage = null;
+
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -73,7 +74,6 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        explode.paint(g);
         //画子弹
         for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
             Bullet b = it.next();
@@ -82,13 +82,22 @@ public class TankFrame extends Frame {
             }
             b.paint(g);
         }
+        //画爆炸
+        for (Iterator<Explode> it = explodes.iterator(); it.hasNext(); ) {
+            Explode e = it.next();
+            if (!e.live) {
+                it.remove();
+            }else {
+                e.paint(g);
+            }
+        }
         //画敌方坦克
         for (Iterator<Tank> it = tanks.iterator(); it.hasNext(); ) {
-            Tank b = it.next();
-            if (!b.live) {
+            Tank i = it.next();
+            if (!i.live) {
                 it.remove();
             }
-            b.paint(g);
+            i.paint(g);
         }
 
         for (Bullet bullet : bulletList) {

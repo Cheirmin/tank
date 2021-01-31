@@ -17,14 +17,14 @@ import java.awt.*;
 @Data
 public class Bullet {
     //速度
-    private static final int SPEED = 25;
+    private static final int SPEED = 20;
     //阵营
     private Group group;
     //长宽
-    public static int DWIDE = ResourceMgr.bulletD.getWidth();
-    public static int DHIGH = ResourceMgr.bulletD.getHeight();
-    public static int LWIDE = ResourceMgr.bulletL.getWidth();
-    public static int LHIGH = ResourceMgr.bulletL.getHeight();
+    public static int DWIDE = ResourceMgr.bullet[0].getWidth();
+    public static int DHIGH = ResourceMgr.bullet[0].getHeight();
+    public static int LWIDE = ResourceMgr.bullet[1].getWidth();
+    public static int LHIGH = ResourceMgr.bullet[1].getHeight();
     //坐标
     private int x, y;
     //方向
@@ -49,16 +49,16 @@ public class Bullet {
         //绘制一个矩形
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                g.drawImage(ResourceMgr.bullet[3], x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                g.drawImage(ResourceMgr.bullet[1], x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                g.drawImage(ResourceMgr.bullet[0], x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                g.drawImage(ResourceMgr.bullet[2], x, y, null);
                 break;
             default:
                 break;
@@ -91,6 +91,7 @@ public class Bullet {
 
     /**
      * 碰撞处理
+     *
      * @param tank 坦克
      */
     public void collideWith(Tank tank) {
@@ -130,7 +131,7 @@ public class Bullet {
         }
 
         if (rect2.intersects(rect1)) {
-            tf.explodes.add(new Explode(this.x,this.y,tf));
+            tf.explodes.add(new Explode(this.x, this.y, tf));
 
             tank.die();
             this.die();

@@ -14,32 +14,37 @@ import java.util.Objects;
  */
 
 public class ResourceMgr {
-    //坦克上下左右
-    public static BufferedImage tankL, tankR, tankU, tankD;
+    //坏坦克上下左右
+    public static BufferedImage[] goodTank = new BufferedImage[4];
+    //我方坦克上下左右
+    public static BufferedImage[] badTank = new BufferedImage[4];
     //子弹
-    public static BufferedImage bulletL, bulletR, bulletU, bulletD;
+    public static BufferedImage[] bullet = new BufferedImage[4];
+
     //爆炸效果
     public static BufferedImage[] explodes = new BufferedImage[16];
 
     static {
         try {
-            tankL = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/tankL.gif")));
-            tankR = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/tankR.gif")));
-            tankU = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/tankU.gif")));
-            tankD = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/tankD.gif")));
+            //上右下左 顺序
+            goodTank[0] = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
+                    .getResourceAsStream("static/images/GoodTank1.png")));
+            goodTank[1] = ImageUtil.rotateImage(goodTank[0], 90);
+            goodTank[2] = ImageUtil.rotateImage(goodTank[0], 180);
+            goodTank[3] = ImageUtil.rotateImage(goodTank[0], -90);
 
-            bulletL = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/bulletL.gif")));
-            bulletR = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/bulletR.gif")));
-            bulletU = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
+            badTank[0] = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
+                    .getResourceAsStream("static/images/BadTank1.png")));
+            badTank[1] = ImageUtil.rotateImage(badTank[0], 90);
+            badTank[2] = ImageUtil.rotateImage(badTank[0], 180);
+            badTank[3] = ImageUtil.rotateImage(badTank[0], -90);
+
+            bullet[0] = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
                     .getResourceAsStream("static/images/bulletU.gif")));
-            bulletD = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
-                    .getResourceAsStream("static/images/bulletD.gif")));
+            bullet[1] = ImageUtil.rotateImage(bullet[0], 90);
+            bullet[2] = ImageUtil.rotateImage(bullet[0], 180);
+            bullet[3] = ImageUtil.rotateImage(bullet[0], -90);
+
 
             for (int i = 0; i < 16; i++) {
                 explodes[i] = ImageIO.read(Objects.requireNonNull(ResourceMgr.class.getClassLoader()
@@ -49,6 +54,4 @@ public class ResourceMgr {
             e.printStackTrace();
         }
     }
-
-
 }

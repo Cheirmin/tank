@@ -34,14 +34,14 @@ public class Explode {
         this.tf = tf;
 
         Audio audio = new Audio("static/audio/explode.wav");
-        Thread thread=new Thread(audio);
+        Thread thread = new Thread(audio);
         thread.start();
     }
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if (step>=ResourceMgr.explodes.length){
-            live =false;
+        if (step >= ResourceMgr.explodes.length) {
+            live = false;
         }
     }
 }

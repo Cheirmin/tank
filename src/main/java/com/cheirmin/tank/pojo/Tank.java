@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
@@ -26,7 +27,7 @@ public class Tank {
     //存活
     public boolean live = true;
     //速度
-    private static final int SPEED = 5;
+    private static final int SPEED = 8;
     //坐标
     private int x, y;
     //是否移动
@@ -37,10 +38,10 @@ public class Tank {
     private Group group = Group.BAD;
 
     //长宽
-    public static int DWIDE = ResourceMgr.tankD.getWidth();
-    public static int DHIGH = ResourceMgr.tankD.getHeight();
-    public static int LWIDE = ResourceMgr.tankL.getWidth();
-    public static int LHIGH = ResourceMgr.tankL.getHeight();
+    public static int DWIDE = ResourceMgr.badTank[0].getWidth();
+    public static int DHIGH = ResourceMgr.badTank[0].getHeight();
+    public static int LWIDE = ResourceMgr.badTank[1].getWidth();
+    public static int LHIGH = ResourceMgr.badTank[1].getHeight();
 
     //随机数
     private Random random = new Random();
@@ -59,19 +60,23 @@ public class Tank {
         g.setColor(Color.WHITE);
         g.drawString("子弹数 " + tf.bulletList.size(), 10, 45);
         g.drawString("敌人数 " + tf.tanks.size(), 100, 45);
+
+        BufferedImage[] tank = (group == Group.BAD)
+                ? ResourceMgr.badTank
+                : ResourceMgr.goodTank;
         //绘制一个矩形
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+                g.drawImage(tank[3], x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(tank[1], x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(tank[0], x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
+                g.drawImage(tank[2], x, y, null);
                 break;
             default:
                 break;

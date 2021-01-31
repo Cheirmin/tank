@@ -1,7 +1,6 @@
 package com.cheirmin.tank.pojo;
 
-import com.cheirmin.tank.ennum.Dir;
-import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.util.Audio;
 import com.cheirmin.tank.util.ResourceMgr;
 import lombok.Data;
 
@@ -33,6 +32,10 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
+
+        Audio audio = new Audio("static/audio/explode.wav");
+        Thread thread=new Thread(audio);
+        thread.start();
     }
 
     public void paint(Graphics g) {

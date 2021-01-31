@@ -22,6 +22,7 @@ import java.awt.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tank {
+    public boolean live = true;
     //坐标
     private int x, y;
     //是否移动
@@ -48,7 +49,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
-        g.drawString("子弹数量" + tf.bulletList.size(), 10, 60);
+        g.drawString("子弹数量" + tf.bulletList.size(), 10, 50);
         //绘制一个矩形
         switch (dir) {
             case LEFT:

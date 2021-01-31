@@ -1,5 +1,7 @@
 package com.cheirmin.tank;
 
+import com.cheirmin.tank.pojo.Tank;
+
 /**
  * @Copyright:
  * @Description:
@@ -11,11 +13,17 @@ package com.cheirmin.tank;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        TankFrame frame = new TankFrame();
+        TankFrame tf = new TankFrame();
+
+        //初始化地方坦克
+        for (int i = 0; i < 5; i++) {
+            tf.tanks.add(new Tank(i*186,50,Dir.DOWN,tf));
+        }
+
         while (true) {
             //每隔50ms重绘画布
             Thread.sleep(50);
-            frame.repaint();
+            tf.repaint();
         }
     }
 }

@@ -21,8 +21,9 @@ import java.util.List;
  */
 
 public class TankFrame extends Frame {
-    public Tank tank = new Tank(200, 200, Dir.DOWN, this);
+    public Tank myTank = new Tank(370, 500, Dir.UP, this);
     public List<Bullet> bulletList = new ArrayList<>();
+    public List<Tank> tanks = new ArrayList<>();
 
     //画布大小
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -72,9 +73,16 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-//        for (int i = 0; i < bulletList.size(); i++) {
-//            bulletList.get(i).paint(g);
-//        }
+        //敌方坦克
+        for (Iterator<Tank> it = tanks.iterator(); it.hasNext(); ) {
+            Tank b = it.next();
+            if (!b.live) {
+                it.remove();
+            }
+            b.paint(g);
+        }
+
+        //画子弹
         for (Iterator<Bullet> it = bulletList.iterator(); it.hasNext(); ) {
             Bullet b = it.next();
             if (!b.live) {
@@ -82,7 +90,8 @@ public class TankFrame extends Frame {
             }
             b.paint(g);
         }
-        tank.paint(g);
+        //我方坦克
+        myTank.paint(g);
     }
 
     /**
@@ -136,7 +145,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_Q:
-                    tank.fire();
+                    myTank.fire();
                     break;
                 default:
                     break;
@@ -146,22 +155,22 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if (!bL && !bR && !bU && !bD) {
-                tank.setMoving(false);
+                myTank.setMoving(false);
                 return;
             }
 
-            tank.setMoving(true);
+            myTank.setMoving(true);
             if (bL) {
-                tank.setDir(Dir.LEFT);
+                myTank.setDir(Dir.LEFT);
             }
             if (bR) {
-                tank.setDir(Dir.RIGHT);
+                myTank.setDir(Dir.RIGHT);
             }
             if (bU) {
-                tank.setDir(Dir.UP);
+                myTank.setDir(Dir.UP);
             }
             if (bD) {
-                tank.setDir(Dir.DOWN);
+                myTank.setDir(Dir.DOWN);
             }
         }
     }

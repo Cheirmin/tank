@@ -83,4 +83,45 @@ public class Bullet {
             live = false;
         }
     }
+
+    public void collideWith(Tank tank) {
+        Rectangle rect1 = null;
+        Rectangle rect2 = null;
+        switch (dir) {
+            case LEFT:
+            case RIGHT:
+                rect1 = new Rectangle(this.x,this.y,LWIDE,LHIGH);
+                break;
+            case UP:
+            case DOWN:
+                rect1 = new Rectangle(this.x,this.y,DWIDE,DHIGH);
+                break;
+            default:
+                rect1 = new Rectangle();
+                break;
+        }
+
+        switch (tank.getDir()) {
+            case LEFT:
+            case RIGHT:
+                rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.LWIDE,Tank.LHIGH);
+                break;
+            case UP:
+            case DOWN:
+                rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.DWIDE,Tank.DHIGH);
+                break;
+            default:
+                rect2 = new Rectangle();
+                break;
+        }
+
+        if (rect2.intersects(rect1)){
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.live = false;
+    }
 }

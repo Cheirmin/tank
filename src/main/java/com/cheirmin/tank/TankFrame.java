@@ -90,6 +90,13 @@ public class TankFrame extends Frame {
             }
             b.paint(g);
         }
+
+        for (int i = 0; i < bulletList.size(); i++) {
+            for (int j = 0; j < tanks.size(); j++) {
+                bulletList.get(i).collideWith(tanks.get(j));
+            }
+        }
+
         //我方坦克
         myTank.paint(g);
     }

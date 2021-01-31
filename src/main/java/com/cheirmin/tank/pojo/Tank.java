@@ -49,7 +49,8 @@ public class Tank {
 
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
-        g.drawString("子弹数量" + tf.bulletList.size(), 10, 50);
+        g.drawString("子弹数 " + tf.bulletList.size(), 10, 45);
+        g.drawString("敌人数 " + tf.tanks.size(), 100, 45);
         //绘制一个矩形
         switch (dir) {
             case LEFT:
@@ -94,6 +95,9 @@ public class Tank {
     }
 
     public void fire() {
+        if (!live){
+            return;
+        }
         int bX = this.x;
         int bY = this.y;
         switch (dir) {
@@ -112,5 +116,9 @@ public class Tank {
         }
 
         tf.bulletList.add(new Bullet(bX, bY, this.dir, this.tf));
+    }
+
+    public void die() {
+        this.live = false;
     }
 }

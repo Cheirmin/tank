@@ -31,9 +31,7 @@ public class Explode {
         this.y = y;
         this.tf = tf;
 
-        Audio audio = new Audio("static/audio/explode.wav");
-        Thread thread = new Thread(audio);
-        thread.start();
+        new Thread(()->new Audio("static/audio/explode.wav").play()).start();
     }
 
     public void paint(Graphics g) {

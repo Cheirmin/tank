@@ -4,6 +4,10 @@ import com.cheirmin.tank.ennum.Dir;
 import com.cheirmin.tank.ennum.Group;
 import com.cheirmin.tank.pojo.Tank;
 import com.cheirmin.tank.pojo.TankFrame;
+import com.cheirmin.tank.util.Audio;
+import com.cheirmin.tank.util.PropertyMgr;
+
+import java.util.Objects;
 
 /**
  * @Copyright:
@@ -18,10 +22,14 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tf = new TankFrame();
 
+        int initTankCount = Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("initTankCount")));
+
         //初始化地方坦克
-        for (int i = 0; i < 5; i++) {
-            tf.tanks.add(new Tank(i * 186, 50,true, Dir.DOWN, Group.BAD, tf));
+        for (int i = 0; i < initTankCount; i++) {
+            tf.tanks.add(new Tank(i * 80, 50,true, Dir.DOWN, Group.BAD, tf));
         }
+
+        new Thread(()-> new Audio("static/audio/war1.wav").loop()).start();
 
         while (true) {
             //每隔50ms重绘画布

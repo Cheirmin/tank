@@ -122,7 +122,7 @@ public class Tank {
         if (group == Group.BAD && random.nextInt(10) > 8) {
             this.fire();
         }
-        if (group == Group.BAD && random.nextInt(100) > 95) {
+        if (group == Group.BAD && random.nextInt(100) > 94) {
             //改变方向
             randomDir();
         }

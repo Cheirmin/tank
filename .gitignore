@@ -1,9 +1,7 @@
 .idea/
 
-.target/
+target/
 
 *.class
 
 *.iml
-
-config

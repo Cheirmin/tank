@@ -20,7 +20,6 @@ public class ResourceMgr {
     public static BufferedImage[] badTank = new BufferedImage[4];
     //子弹
     public static BufferedImage[] bullet = new BufferedImage[4];
-
     //爆炸效果
     public static BufferedImage[] explodes = new BufferedImage[16];
 

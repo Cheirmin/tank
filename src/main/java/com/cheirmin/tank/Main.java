@@ -29,7 +29,7 @@ public class Main {
             tf.tanks.add(new Tank(i * 80, 50,true, Dir.DOWN, Group.BAD, tf));
         }
 
-        new Thread(()-> new Audio("static/audio/war1.wav").loop()).start();
+//        new Thread(()-> new Audio("static/audio/war1.wav").loop()).start();
 
         while (true) {
             //每隔50ms重绘画布

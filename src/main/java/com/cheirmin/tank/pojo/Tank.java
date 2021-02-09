@@ -2,6 +2,10 @@ package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.ennum.Dir;
 import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.interf.DefaultFireStrategy;
+import com.cheirmin.tank.interf.FireStrategy;
+import com.cheirmin.tank.interf.FourDirFireStrategy;
+import com.cheirmin.tank.util.PropertyMgr;
 import com.cheirmin.tank.util.ResourceMgr;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +14,8 @@ import lombok.NoArgsConstructor;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -27,7 +33,7 @@ public class Tank {
     //存活
     public boolean live = true;
     //速度
-    private static final int SPEED = 5;
+    private static final int SPEED = Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("tankSpeed")));
     //坐标
     private int x, y;
     //是否移动
@@ -51,6 +57,8 @@ public class Tank {
     //判断重复--碰撞检测
     Rectangle rect = new Rectangle();
 
+    FireStrategy fs;
+
     public Tank(int x, int y, boolean moving, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
@@ -67,6 +75,17 @@ public class Tank {
         } else {
             rect.width = DWIDE;
             rect.height = DHIGH;
+        }
+        try {
+            if (group == Group.GOOD) {
+                String gfs = (String) PropertyMgr.get("goodFs");
+                fs = (FireStrategy) Class.forName(gfs).getDeclaredConstructor().newInstance();
+            } else {
+                String bfs = (String) PropertyMgr.get("badFs");
+                fs = (FireStrategy) Class.forName(bfs).getDeclaredConstructor().newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -154,27 +173,7 @@ public class Tank {
     }
 
     public void fire() {
-        if (!live) {
-            return;
-        }
-        int bX = this.x;
-        int bY = this.y;
-        switch (dir) {
-            case LEFT:
-            case RIGHT:
-                bX += (Tank.LWIDE - Bullet.LWIDE) / 2;
-                bY += (Tank.LHIGH - Bullet.LHIGH) / 2;
-                break;
-            case UP:
-            case DOWN:
-                bX += (Tank.DWIDE - Bullet.DWIDE) / 2;
-                bY += (Tank.DHIGH - Bullet.DHIGH) / 2;
-                break;
-            default:
-                break;
-        }
-
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        fs.fire(this);
     }
 
     public void die() {

@@ -2,10 +2,12 @@ package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.ennum.Dir;
 import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.util.PropertyMgr;
 import com.cheirmin.tank.util.ResourceMgr;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * @Copyright:
@@ -17,7 +19,7 @@ import java.awt.*;
 @Data
 public class Bullet {
     //速度
-    private static final int SPEED = 20;
+    private static final int SPEED = Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("bulletSpeed")));
     //阵营
     private Group group;
     //长宽
@@ -52,6 +54,8 @@ public class Bullet {
             rect.width = DWIDE;
             rect.height = DHIGH;
         }
+
+        tf.bullets.add(this);
     }
 
     public void paint(Graphics g) {

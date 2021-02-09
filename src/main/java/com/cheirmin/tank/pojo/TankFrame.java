@@ -2,6 +2,7 @@ package com.cheirmin.tank.pojo;
 
 import com.cheirmin.tank.ennum.Dir;
 import com.cheirmin.tank.ennum.Group;
+import com.cheirmin.tank.util.PropertyMgr;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -11,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Copyright:
@@ -27,7 +29,8 @@ public class TankFrame extends Frame {
     public List<Explode> explodes = new ArrayList<>();
 
     //画布大小
-    public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("gameWidth")));
+    public static final int GAME_HEIGHT = Integer.parseInt((String) Objects.requireNonNull(PropertyMgr.get("gameHeight")));
 
     public TankFrame() {
         //大小
@@ -74,13 +77,8 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        //画子弹
-        for (Iterator<Bullet> it = bullets.iterator(); it.hasNext(); ) {
-            Bullet b = it.next();
-            if (!b.live) {
-                it.remove();
-            }
-            b.paint(g);
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
         }
         //画爆炸
         for (int i = 0; i < explodes.size(); i++) {
